@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="accordion" id="accordionExample">
+    <p>{{text_com}}</p>
+    {% for article in posts %}
+    <div class="accordion-item">
+        <p><a href="/post/{{article.id}}">{{article.title}}</a> <font size="1" color="gray">{{article.time}}</font></p>
+    </div>
+    {% endfor %}
+</div>
+<div>
+
+    {% if current_user.is_authenticated %}
+        <p><strong>Добавить запись</strong></p>
+        <form method="POST" action="/add_post/">
+            <label for="title">Название:</label>
+            <input name="title" type="text"><br>
+            <label for="content">Содержание:</label>
+            <input name="content" type="text">
+            <input type="submit" value="Отправить">
+        </form>
+    {% endif %}
+</div>
+{% endblock %}

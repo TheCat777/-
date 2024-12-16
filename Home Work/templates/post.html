@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="accordion" id="accordionExample">
+    <div class="accordion-item">
+        <div class="accordion-body">
+            <a href="/">На главную</a>
+            <br>
+            <h5>{{post.title}} <font size="1" color="gray">{{post.time}}</font></h5>
+            <p>{{post.content}}</p>
+            {% if current_user.is_authenticated and current_user.get_id() == post.user %}
+                <p><a href="/delete_post/{{post.id}}">Удалить запись</a>  <a href="/edit_post/{{post.id}}">Редактировать</a></p>
+            {% endif %}
+            <p><br>{{text_com}}</p>
+            {% for comment in comments %}
+                {% if current_user.is_authenticated and current_user.get_id() == comment.user %}
+                    <p><font size="1" color="gray">{{comment.time}} <a href="/delete_comment/{{post.id}}/{{comment.id}}" style="color: gray"><i>удалить</i></a> <a href="/edit_comments/{{post.id}}/{{comment.id}}" style="color: gray"><i>редактировать</i></a></font><br><font size="3" color="black">{{comment.content}}</font></p>
+                {% else %}
+                    <p><font size="1" color="gray">{{comment.time}}</font><br><font size="3" color="black">{{comment.content}}</font></p>
+                {% endif %}
+            {% endfor %}
+            {% if current_user.is_authenticated %}
+            <div>
+                <p><strong>Добавить комментарий:</strong></p>
+                <form method="POST" action="/add_comment/{{post.id}}">
+                    <label for="content">Текст:</label>
+                    <input name="content" type="text">
+                    <input type="submit" value="Добавить">
+                </form>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

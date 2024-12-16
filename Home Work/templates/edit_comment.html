@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="accordion" id="accordionExample">
+    <div class="accordion-item">
+        <div class="accordion-body">
+            <a href="/">На главную</a>
+            <form method="POST" action="/edit_comments/{{post.id}}/{{comments.id}}" id="form1">
+                <p>Содержание: <input name="content" value="{{comments.content}}"></p>
+            </form>
+            <p><a href="/post/{{post.id}}">Отмена</a>  <a href="/edit_comments/{{post.id}}/{{comments.id}}" onclick="document.getElementById('form1').submit(); return false;">Сохранить</a></p>
+        </div>
+    </div>
+</div>
+{% endblock %}
